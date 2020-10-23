@@ -11,7 +11,7 @@ miro.onReady(() => {
                     return {
                         title: 'signed in example',
                         svgIcon: icon,
-                        onClick: createFrames,
+                        onClick: reloadTodoistInbox,
                     }
                 }
             },
@@ -26,6 +26,11 @@ var frameReference
 var frameInProjectPlan
 var frameToDecompose
 var frameDone
+
+async function reloadTodoistInbox() {
+    await clearBoard();
+    await createFrames();
+}
 
 async function createFrames() {
     // alert('Hi! Get new sticker 6!');
@@ -152,4 +157,21 @@ async function createCard() {
         type: 'card'
     })
     console.log(allCards)
+}
+
+async function clearBoard() {
+    // alert('Hi! Get new sticker 6!');
+    let allWidgets = await miro.board.widgets.get();
+    let widgetIds = allWidgets.map(function(widget) {
+        return widget.id;
+      })
+    miro.board.widgets.deleteById(widgetIds);
+
+    frameInbox = undefined;
+    frameIdeas = undefined;
+    frameTasks = undefined;
+    frameReference = undefined;
+    frameInProjectPlan = undefined;
+    frameToDecompose = undefined;
+    frameDone = undefined;
 }
