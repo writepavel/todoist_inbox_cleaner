@@ -3,7 +3,16 @@
  ["src"]
 
  :dependencies
- [[funcool/promesa "6.0.0"]]
+ [[funcool/promesa "6.0.0"]
+  [nrepl/nrepl "0.8.2"]
+  [cider/cider-nrepl "0.25.4"]]
+
+ ;:devDependencies
+ ;[[nrepl/nrepl "0.8.2"]
+ ; [cider/cider-nrepl "0.25.4"]]
+
+ :nrepl
+ {:port 3333}
 
  :builds
  {:app {:target :browser
