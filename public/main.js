@@ -11,7 +11,7 @@ miro.onReady(() => {
                     return {
                         title: 'signed in example',
                         svgIcon: icon,
-                        onClick: createFrame,
+                        onClick: createFrames,
                     }
                 }
             },
@@ -19,54 +19,60 @@ miro.onReady(() => {
     })
 })
 
-const frameInbox;
-const frameIdeas;
-const frameTasks;
-const frameReference;
-const frameInProjectPlan;
-const frameToDecompose;
+var frameInbox
+var frameIdeas
+var frameTasks
+var frameReference
+var frameInProjectPlan
+var frameToDecompose
 
 async function createFrames() {
     // alert('Hi! Get new sticker 6!');
 
-    frameIdeas = await miro.board.widgets.create({
-        type: 'frame',
-        x: 0,
-        y: 0,
-        width: 350,
-        height: 700,
-        title: "Ideas",
-        style: {
-            backgroundColor: "#FFC0CB"
-        }
-    });
+    if (!frameIdeas) {
+        frameIdeas = await miro.board.widgets.create({
+            type: 'frame',
+            x: 0,
+            y: 0,
+            width: 350,
+            height: 700,
+            title: "Ideas",
+            style: {
+                backgroundColor: "#FFC0CB"
+            }
+        });
+    } 
 
-    frameTasks = await miro.board.widgets.create({
-        type: 'frame',
-        x: 375,
-        y: 0,
-        width: 350,
-        height: 700,
-        title: "Tasks",
-        style: {
-            backgroundColor: "#ABEBC6"
-        }
+    if (!frameTasks) {
+        frameTasks = await miro.board.widgets.create({
+            type: 'frame',
+            x: 375,
+            y: 0,
+            width: 350,
+            height: 700,
+            title: "Tasks",
+            style: {
+                backgroundColor: "#ABEBC6"
+            }
+        });
+    }
 
-    });
+    if (!frameInProjectPlan) {
+        frameInProjectPlan = await miro.board.widgets.create({
+            type: 'frame',
+            x: 750,
+            y: 0,
+            width: 350,
+            height: 700,
+            title: "In Project Plan",
+            style: {
+                backgroundColor: "#FFE4C4"
+            }
+        });
+    }
 
-    frameInProjectPlan = await miro.board.widgets.create({
-        type: 'frame',
-        x: 750,
-        y: 0,
-        width: 350,
-        height: 700,
-        title: "In Project Plan",
-        style: {
-            backgroundColor: "#FFE4C4"
-        }
-    });
-
-    frameReference = await miro.board.widgets.create({
+    if (!frameReference) {
+        frameReference = await miro.board.widgets.create({
         type: 'frame',
         x: 1125,
         y: 0,
@@ -77,7 +83,9 @@ async function createFrames() {
             backgroundColor: "#90EE90"
         }
     });
+}
 
+if (!frameToDecompose) {
     frameToDecompose = await miro.board.widgets.create({
         type: 'frame',
         x: 1500,
@@ -89,7 +97,9 @@ async function createFrames() {
             backgroundColor: "#B0C4DE"
         }
     });
+}
 
+if (!frameInbox) {
     frameInbox = await miro.board.widgets.create({
         type: 'frame',
         x: 750,
@@ -101,6 +111,7 @@ async function createFrames() {
         }
 
     });
+}
 
     let allFrames = await miro.board.widgets.get({
         type: 'frame'
