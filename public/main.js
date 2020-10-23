@@ -25,11 +25,12 @@ var frameTasks
 var frameReference
 var frameInProjectPlan
 var frameToDecompose
+var frameDone
 
 async function createFrames() {
     // alert('Hi! Get new sticker 6!');
 
-    if (!frameIdeas) {
+    if (typeof frameIdeas == "undefined") {
         frameIdeas = await miro.board.widgets.create({
             type: 'frame',
             x: 0,
@@ -43,7 +44,7 @@ async function createFrames() {
         });
     } 
 
-    if (!frameTasks) {
+    if (typeof frameTasks == "undefined") {
         frameTasks = await miro.board.widgets.create({
             type: 'frame',
             x: 375,
@@ -57,7 +58,7 @@ async function createFrames() {
         });
     }
 
-    if (!frameInProjectPlan) {
+    if (typeof frameInProjectPlan == "undefined") {
         frameInProjectPlan = await miro.board.widgets.create({
             type: 'frame',
             x: 750,
@@ -71,7 +72,7 @@ async function createFrames() {
         });
     }
 
-    if (!frameReference) {
+    if (typeof frameReference == "undefined") {
         frameReference = await miro.board.widgets.create({
         type: 'frame',
         x: 1125,
@@ -85,7 +86,7 @@ async function createFrames() {
     });
 }
 
-if (!frameToDecompose) {
+if (typeof frameToDecompose == "undefined") {
     frameToDecompose = await miro.board.widgets.create({
         type: 'frame',
         x: 1500,
@@ -99,12 +100,26 @@ if (!frameToDecompose) {
     });
 }
 
-if (!frameInbox) {
+if (typeof frameDone == "undefined") {
+    frameDone = await miro.board.widgets.create({
+        type: 'frame',
+        x: 1875,
+        y: 0,
+        width: 350,
+        height: 700,
+        title: "Done",
+        style: {
+            backgroundColor: "##E0FFFF"
+        }
+    });
+}
+
+if (typeof frameInbox == "undefined") {
     frameInbox = await miro.board.widgets.create({
         type: 'frame',
-        x: 750,
+        x: 935,
         y: 550,
-        width: 1800,
+        width: 2230,
         height: 350,
         style: {
             backgroundColor: "#FFA07A"
