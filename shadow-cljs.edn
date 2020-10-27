@@ -1,31 +1,41 @@
 ;; shadow-cljs configuration
 {:source-paths
- ["src"]
+           ["src"]
 
  :dependencies
- [[funcool/promesa "6.0.0"]
-  [nrepl/nrepl "0.8.2"]
-  [cider/cider-nrepl "0.25.4"]]
+           [[funcool/promesa "6.0.0"]
+            [nrepl/nrepl "0.8.2"]
+            [cider/cider-nrepl "0.25.4"]]
 
  ;:devDependencies
  ;[[nrepl/nrepl "0.8.2"]
  ; [cider/cider-nrepl "0.25.4"]]
 
+ :ssl      {}
+
+ :http     {:port 9630}
+
  :nrepl
- {:port 3333}
+           {:port       3333
+            ;:accept clojure.core.server/repl
+            ;:bind "0.0.0.0"
+            ;:address "0.0.0.0"
+            :middleware [cider.nrepl/cider-middleware]}
+
+ :jvm-opts ["-Xmx900m"]
 
  :builds
- {:app {:target :browser
-        :output-dir "public/js"
-        :asset-path "/js"
+           {:app {:target     :browser
+                  :output-dir "public/js"
+                  :asset-path "/js"
 
-        :modules
-        {:main ;; <- becomes public/js/main.js
-         {:entries [inboxcleaner.browser]}}
+                  :modules
+                              {:main                        ;; <- becomes public/js/main.js
+                               {:entries [inboxcleaner.browser]}}
 
-        ;; start a development http server on http://localhost:8020
-        :devtools
-        {:http-root "public"
-         :http-port 8020
-         :use-document-protocol true}
-        }}}
+                  ;; start a development http server on http://localhost:8020
+                  :devtools
+                              {:http-root             "public"
+                               :http-port             8080
+                               :use-document-protocol true}
+                  }}}
