@@ -1,11 +1,55 @@
 (ns inboxcleaner.core
-)
+  (:require
+   [kitchen-async.promise :as p]
+   [cljs.core.async :refer [mix pub sub mult tap chan put! take! >! <! buffer dropping-buffer sliding-buffer timeout close! alts!]])
+(:require-macros
+ [cljs.core.async.macros :refer [go go-loop alt!]]
+ [kitchen-async.promise :as p]))
 
 (defonce icon
-  "<circle cx= \"12\" cy= \"12\" r= \"9\" fill= \"none\" fill-rule= \"evenodd\" stroke= \"currentColor\" stroke-width= \"2\" ></circle>")
+         "<circle cx= \"12\" cy= \"12\" r= \"9\" fill= \"none\" fill-rule= \"evenodd\" stroke= \"currentColor\" stroke-width= \"2\" ></circle>")
+
+
+
+(defn sayHi
+  []
+  (js/alert "Hi"))
+
+(defn bottomBar-async
+  []
+  (p/promise [resolve-fn reject-fn]
+             (p/let [current-user (.-currentUser js/miro)
+                     signed-in (.isSignedIn ^js/miro.currentUser current-user)]
+               (when signed-in
+                 (resolve-fn
+                  #js{:title   "signed in example"
+                      :svgIcon icon
+                      :onClick sayHi})))))
 
 (defn add-button
   []
-(js/console.log js/miro))
+(.onReady js/miro #(.initialize js/miro
+                                #js{:extensionPoints
+                                    #js{:bottomBar bottomBar-async}})))
 
- ;(shadow/repl :app)
+
+;(shadow/repl :app)
+
+(comment 
+  "It is better to use core.async inside real cljs code instead of promises."
+  (alt!
+    some-chan
+    ([x]
+     (when (some? x)
+       (process-some-result x)))
+
+    other-chan
+    ([x]
+     (when (some? x)
+       (process-other-result x)))
+
+    (async/timeout 1000)
+    ([_]
+     (do-something-else))
+    )
+  )
