@@ -51,4 +51,10 @@ And it works)
  ssl on aws: https://www.jaygould.co.uk/2020-02-29-ssl-aws-ec2-instance-nginx/ - but it isn't required for repl-dev mode as ssl used in dev-http and shadow-cljs servers from shadow-cljs itself if ssl is enabled there.
 
  https://shadow-cljs.github.io/docs/UsersGuide.html#_ssl - using ssl in dev servers
- 
+
+ https://github.com/belovehq/aws-repl-and-beakerx - ssh-tunneling
+
+
+ it probably can be achieved without buing domain
+ https://expeditedsecurity.com/blog/localhost-ssl-fix/
+ https://maxrohde.com/2013/09/07/setting-up-ssl-with-netty/
