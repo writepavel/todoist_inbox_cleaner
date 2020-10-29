@@ -20,13 +20,13 @@
 (defn bottomBar-async
   []
   (p/promise [resolve-fn reject-fn]
-              (let [current-user (.-currentUser js/miro)
-                    signed-in (.isSignedIn ^js/miro.currentUser current-user)]
+              (go (let [current-user (.-currentUser js/miro)
+                        signed-in (<p! (.isSignedIn ^js/miro.currentUser current-user))]
                     (when signed-in
                       (resolve-fn
                        #js{:title   "signed in example"
                            :svgIcon icon
-                           :onClick sayHi})))))
+                           :onClick sayHi}))))))
 
 (defn add-button
   []
